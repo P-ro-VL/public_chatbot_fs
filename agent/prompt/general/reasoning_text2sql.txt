@@ -1,0 +1,73 @@
+Here is a natural language query that you need to convert into a SQL query:
+
+<task>
+
+{task}
+
+</task>
+
+### Company details
+
+<data>
+
+{stock_code_table}
+
+</data>
+
+### Snapshot of the mapping table:
+<data>
+
+{suggestions_table}
+
+</data>
+
+### Here are some examples of a query that you can refer to:
+
+<example>
+
+{few_shot}
+
+</example>
+ 
+<instruction>
+
+Analyze the task step-by-step then return SQL query that match with the database schema.
+
+If possible, the table result should have the following columns:
+
+- stock_code / industry
+- year
+- quarter
+- category_code / stock_code
+- data / data_mean / data_sum
+
+However, feel free to modify the table if needed.
+
+</instruction>
+
+### Note: 
+- Include the detailed suitable name (including datetime, industry, ...) for the table in the query in the following format:
+
+```sql
+-- ### detailed_table_name
+```
+
+- The `category_code` mapping table contain value of both `financial_statment` and `explaination` tables
+- The user can only see the query results, so your name should be as informative as possible.
+- Do not make any assumption about the account name. You can refer to the mapping table above to find the suitable account.
+- The query must not contain column `ratio_name` or `en_caption`.
+- If the question requires data within the quarter time range (from 2020 to Q3 2024), you should use the `date_added` instead of `year` and `quarter`, in the following format:
+
+```sql
+WHERE date_added BETWEEN '2020-01-01' AND '2024-09-30' 
+AND quarter !=0
+
+-- Date added for each quarter:
+-- - Q1: YYYY-03-30
+-- - Q2: YYYY-06-30
+-- - Q3: YYYY-09-30
+-- - Q4: YYYY-12-30
+-- - Q0: YYYY-12-30 (Annual data is add at the end of the year)
+```
+
+- If the question requires data within annual data, you can use `year` column directly

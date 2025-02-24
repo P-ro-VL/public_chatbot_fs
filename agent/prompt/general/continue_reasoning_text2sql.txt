@@ -1,0 +1,25 @@
+<task>
+
+{task}
+
+</task>
+
+<data>
+
+{stock_code_table}
+
+{suggestions_table}
+
+</data>
+
+<example>
+
+{few_shot}
+
+</example>
+ 
+<instruction>
+
+Think step-by-step and return SQL query based on the task above.
+
+</instruction>
