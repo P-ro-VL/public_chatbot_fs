@@ -82,8 +82,8 @@ chmod +x run.sh
 Clone the reporitoty and create environment
 
 ```bash
-git clone https://github.com/hung20gg/chatbot_financial_statement.git
-cd chatbot_financial_statement
+git clone https://github.com/hung20gg/public_chatbot_fs.git
+cd public_chatbot_fs
 git clone https://github.com/hung20gg/llm.git
 
 conda create -y -n text2sql
