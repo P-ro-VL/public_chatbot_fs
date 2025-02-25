@@ -43,7 +43,7 @@ def initialize_text2sql(text2sql_config, prompt_config, version = 'v3', message 
     if check_embedding_server(embedding_server):
         logging.info('Using remote embedding server')
         db_config = DBConfig(**TEI_VERTICAL_UNIVERSAL_CONFIG)
-    elif os.path.exists('data/vector_db_vertical_openai'):
+    elif os.path.exists(f'data/vector_db_vertical_openai_{version}'):
         logging.info('Using openai embedding')
         db_config = DBConfig(**OPENAI_VERTICAL_UNIVERSAL_CONFIG)
     
