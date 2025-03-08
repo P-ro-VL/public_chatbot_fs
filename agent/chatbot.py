@@ -40,6 +40,8 @@ class Chatbot(BaseAgent):
     is_routing: bool = False
     solver_ouputs: dict = dict()
     solver_ids: List[str] = []
+
+    uid: str = str(uuid.uuid4())
     
     def __init__(self, config: ChatConfig, text2sql: Text2SQL, **kwargs):
         super().__init__(config = config, text2sql = text2sql, **kwargs)
@@ -216,9 +218,9 @@ class Chatbot(BaseAgent):
         output =  self.text2sql.solve(task, **kwargs)
         self.sql_history = output.history
         
-        if not os.path.exists('temp'):
-            os.makedirs('temp')
-        with open('temp/sql_history.json', 'w') as file:
+        if not os.path.exists('history'):
+            os.makedirs('history')
+        with open(f'history/{self.uid}.json', 'w') as file:
             json.dump(self.sql_history, file)
         
         table_strings = utils.table_to_markdown(output.execution_tables)
@@ -391,6 +393,9 @@ class ChatbotSematic(Chatbot):
         
     message_saver: BaseSemantic
     conversation_id: str = None
+
+    def __init__(self, config: ChatConfig, text2sql: Text2SQL, **kwargs):
+        super().__init__(config=config, text2sql=text2sql, **kwargs)
         
     def save_sql(self, output: Text2SQLOutput):
         print("Saving SQL")

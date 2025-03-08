@@ -38,7 +38,7 @@ def steps_to_strings(steps):
 
 
 class Text2SQLOutput(BaseModel):
-    id: str = str(uuid.uuid4())
+    uid: str = str(uuid.uuid4())
     task: str
     solver_id: str
     timestamp: datetime = datetime.now()
@@ -50,7 +50,7 @@ class Text2SQLOutput(BaseModel):
 
     def convert_to_dict(self):
         return {
-            "id": self.id,
+            "uid": self.uid,
             "task": self.task,
             "solver_id": self.solver_id,
             "timestamp": self.timestamp,
@@ -66,7 +66,7 @@ class Text2SQLOutput(BaseModel):
 
 class Text2SQL(BaseAgent):
 
-    id: str = str(uuid.uuid4())
+    uid: str = str(uuid.uuid4())
     db: BaseDBHUB # The database connection.
     max_steps: int # The maximum number of steps to break down the task
     prompt_config: PromptConfig # The prompt configuration. This is for specify prompt for horizontal or vertical database design
@@ -110,7 +110,7 @@ class Text2SQL(BaseAgent):
         self._latest_task_index = 0
         self.max_debug_round = 3
         self.current_solution_cache = 0
-        self.id = str(uuid.uuid4())
+        self.uid = str(uuid.uuid4())
 
     
     def get_latest_task(self):
@@ -1045,7 +1045,7 @@ Only return new, detailed task. Do not return the SQL. Return in the following f
         self.current_solution_cache += 1
 
 
-        return Text2SQLOutput(solver_id = self.id, 
+        return Text2SQLOutput(solver_id = self.uid, 
                               task = task,
                               history = self.history, 
                               error_messages = error_messages, 
